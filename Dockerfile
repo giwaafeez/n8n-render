@@ -2,14 +2,15 @@ FROM n8nio/n8n:latest
 
 USER root
 
-# Install Python 3 and required tools
-RUN apk add --no-cache \
+# Install Python and build tools (Debian-based image)
+RUN apt-get update && apt-get install -y \
     python3 \
-    py3-pip \
-    py3-virtualenv \
-    build-base
+    python3-pip \
+    python3-venv \
+    build-essential \
+    && rm -rf /var/lib/apt/lists/*
 
 # Ensure python is available as "python"
-RUN ln -sf python3 /usr/bin/python
+RUN ln -sf /usr/bin/python3 /usr/bin/python
 
 USER node
