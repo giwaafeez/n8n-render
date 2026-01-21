@@ -1,16 +1,15 @@
-FROM n8nio/n8n:latest
+FROM n8nio/n8n:latest-alpine
 
 USER root
 
-# Install Python and build tools (Debian-based image)
-RUN apt-get update && apt-get install -y \
+# Install Python and build tools on Alpine
+RUN apk update && apk add --no-cache \
     python3 \
-    python3-pip \
-    python3-venv \
-    build-essential \
-    && rm -rf /var/lib/apt/lists/*
+    py3-pip \
+    py3-virtualenv \
+    build-base
 
 # Ensure python is available as "python"
-RUN ln -sf /usr/bin/python3 /usr/bin/python
+RUN ln -sf python3 /usr/bin/python
 
 USER node
